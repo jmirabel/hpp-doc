@@ -101,7 +101,7 @@ hpp-gepetto-viewer_branch=devel
 hpp-gepetto-viewer_repository=${HPP_REPO}
 
 hpp-gui_branch=devel
-hpp-gui_repository=${HPP_REPO}
+hpp-gui_repository=${JMIRABEL_REPO}
 
 hpp-plot_branch=devel
 hpp-plot_repository=${JMIRABEL_REPO}
