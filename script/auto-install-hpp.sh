@@ -6,13 +6,15 @@ APT_DEP="autoconf g++ cmake libboost-dev \
   ros-indigo-octomap ros-indigo-resource-retriever ros-indigo-srdfdom \
   ros-indigo-pr2-robot flex bison asciidoc source-highlight git libomniorb4-dev \
   omniorb-nameserver omniidl omniidl-python libltdl-dev python-matplotlib \
-  libtinyxml2-dev liblog4cxx10-dev \
+  libtinyxml2-dev liblog4cxx10-dev subversion graphviz-dev \
   qt4-dev-tools libqt4-opengl-dev libqtgui4 oxygen-icon-theme"
 APT_BUILD_DEP="openscenegraph"
 
 MAKE_TARBALL=false
 
-BRANCH=devel
+BRANCH=gmar_winter_school
+GITHUB_USER=jmirabel
+
 if [ -z ${DEVEL_DIR} ]; then
   export DEVEL_DIR=/local/devel/hpp
 fi
@@ -73,8 +75,8 @@ mkdir --parents $DEVEL_DIR/src
 mkdir --parents $DEVEL_DIR/install
 
 # Get config script
-wget -O $DEVEL_DIR/config.sh https://raw.githubusercontent.com/humanoid-path-planner/hpp-doc/${BRANCH}/doc/config.sh
-wget -O $DEVEL_DIR/src/Makefile https://raw.githubusercontent.com/humanoid-path-planner/hpp-doc/${BRANCH}/doc/Makefile
+wget -O $DEVEL_DIR/config.sh https://raw.githubusercontent.com/${GITHUB_USER}/hpp-doc/${BRANCH}/doc/config.sh
+wget -O $DEVEL_DIR/src/Makefile https://raw.githubusercontent.com/${GITHUB_USER}/hpp-doc/${BRANCH}/doc/Makefile
 
 source $DEVEL_DIR/config.sh
 

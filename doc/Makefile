@@ -7,9 +7,10 @@ FCL_REPO=https://github.com/flexible-collision-library
 JRL_REPO=https://github.com/jrl-umi3218
 LAAS_REPO=https://github.com/laas
 HPP_REPO=https://github.com/humanoid-path-planner
+JMIRABEL_REPO=https://github.com/jmirabel
 
 SRC_DIR=${DEVEL_DIR}/src
-BUILD_TYPE=Debug
+BUILD_TYPE=Release
 
 hpp-fcl_branch=devel
 hpp-fcl_repository=${HPP_REPO}
@@ -53,20 +54,14 @@ hpp-wholebody-step-corba_repository=${HPP_REPO}
 test-hpp_branch=devel
 test-hpp_repository=${HPP_REPO}
 
-hrp2_branch=groovy
-hrp2_repository=${JRL_REPO}
-
-hpp-hrp2_branch=devel
-hpp-hrp2_repository=${HPP_REPO}
-
 robot_capsule_urdf_branch=groovy
 robot_capsule_urdf_repository=${LAAS_REPO}
 
 robot_model_py_branch=groovy
 robot_model_py_repository=${LAAS_REPO}
 
-hpp-doc_branch=devel
-hpp-doc_repository=${HPP_REPO}
+hpp-doc_branch=gmar_winter_school
+hpp-doc_repository=${JMIRABEL_REPO}
 
 hpp-manipulation_branch=devel
 hpp-manipulation_repository=${HPP_REPO}
@@ -86,6 +81,9 @@ iai_maps_repository=${HPP_REPO}
 hpp_tutorial_branch=devel
 hpp_tutorial_repository=${HPP_REPO}
 
+ur_description_branch=master
+ur_description_repository=${JMIRABEL_REPO}
+
 hpp_benchmark_branch=master
 hpp_benchmark_repository=${HPP_REPO}
 
@@ -104,16 +102,20 @@ hpp-gepetto-viewer_repository=${HPP_REPO}
 hpp-gui_branch=devel
 hpp-gui_repository=${HPP_REPO}
 
+hpp-plot_branch=devel
+hpp-plot_repository=${JMIRABEL_REPO}
+
 OpenSceneGraph-3.4.0_extra_flags= -DDESIRED_QT_VERSION=4 -DCOLLADA_DYNAMIC_LIBRARY=${DEVEL_DIR}/install/lib/libcollada14dom.so -DCOLLADA_INCLUDE_DIR=${DEVEL_DIR}/install/include/collada-dom -DLIB_POSTFIX=""
+
+hpp-plot_extra_flags= -DQGV_INCLUDE_DIR=${DEVEL_DIR}/install/include/qgv
 
 doxygen-Release_1_8_10_extra_flags= -DCMAKE_BUILD_TYPE=Release
 
-all: doxygen-Release_1_8_10.install hpp_tutorial.install \
-	hpp-gepetto-viewer.install
+all: doxygen-Release_1_8_10.install hpp-manipulation-corba.install \
+	hpp_tutorial.install hpp-gepetto-viewer.install hpp-gui.install \
+	hpp-plot.install ur_description.install 
 	${MAKE} hpp-doc.install
 
-# source $DEVEL_DIR/install/setup.bash before installing hrp2.
-hrp2: test-hpp.install
 
 hpp-fcl.configure.dep: hpp-fcl.checkout
 eigen3.configure.dep: eigen3.checkout
@@ -150,15 +152,12 @@ hpp-manipulation-corba.configure.dep: hpp-manipulation-urdf.install \
 robot_model_py.configure.dep: robot_model_py.checkout
 robot_capsule_urdf.configure.dep: robot_model_py.install \
 	robot_capsule_urdf.checkout
-hpp-hrp2.configure.dep: hrp2.install hpp-corbaserver.install hpp-hrp2.checkout
-hrp2.configure.dep: robot_capsule_urdf.install robot_model_py.install \
-	hrp2.checkout
 test-hpp.configure.dep: hpp-wholebody-step-corba.install \
-	hpp-gepetto-viewer.install hpp-hrp2.install test-hpp.checkout
+	hpp-gepetto-viewer.install test-hpp.checkout
 robot_state_chain_publisher.configure.dep: robot_state_chain_publisher.checkout
 iai_maps.configure.dep: robot_state_chain_publisher.install iai_maps.checkout
 hpp_tutorial.configure.dep: hpp-gepetto-viewer.install iai_maps.install \
-	hpp-corbaserver.install hpp_tutorial.checkout
+	hpp-manipulation-corba.install hpp_tutorial.checkout
 hpp_benchmark.configure.dep: hpp_benchmark.checkout
 collada-dom.configure.dep: collada-dom.checkout
 OpenSceneGraph-3.4.0.configure.dep: collada-dom.install \
@@ -172,6 +171,10 @@ hpp-gepetto-viewer.configure.dep: gepetto-viewer-corba.install \
 	hpp-gepetto-viewer.checkout
 hpp-gui.configure.dep: gepetto-viewer-corba.install \
 	hpp-corbaserver.install hpp-gui.checkout
+hpp-plot.configure.dep: hpp-manipulation-corba.install qgv.install \
+	hpp-plot.checkout
+qgv.configure.dep: qgv.checkout
+dlr-miiwa-model.configure.dep: dlr-miiwa-model.checkout
 
 status:
 	@for child_dir in $$(ls ${SRC_DIR}); do \
@@ -287,17 +290,6 @@ doxygen-Release_1_8_10.checkout:
 	else \
 		wget -O - "https://github.com/doxygen/doxygen/archive/Release_1_8_10.tar.gz" | tar -xz;\
 	fi
-
-hrp2.configure: hrp2.configure.dep
-	. ${DEVEL_DIR}/install/setup.sh; \
-	cd ${SRC_DIR}/hrp2/hrp2_14_description;\
-	mkdir -p build; \
-	cd ${SRC_DIR}/hrp2/hrp2_14_description/build; \
-	cmake -DCMAKE_INSTALL_PREFIX=${DEVEL_DIR}/install -DCMAKE_INSTALL_LIBDIR=lib -DCMAKE_BUILD_TYPE=${BUILD_TYPE} ..
-
-hrp2.install: hrp2.configure
-	cd ${SRC_DIR}/hrp2/hrp2_14_description/build;\
-	make install
 
 robot_model_py.configure: robot_model_py.configure.dep
 	cd ${SRC_DIR}/$(@:.configure=)/xml_reflection;\
