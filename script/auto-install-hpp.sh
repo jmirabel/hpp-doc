@@ -89,7 +89,7 @@ make -e hpp-manipulation-corba.install all hpp-gui.install
 
 if [ ${MAKE_TARBALL} = true ]; then
   cd $DEVEL_DIR/
-  mkdir tarball
+  mkdir --parents tarball
   SUFFIX="${BRANCH}-`date +%Y%m%d`-${BUILD_TYPE}"
   tar czf "tarball/hpp.src.${SUFFIX}.tar.gz" src/ install/ config.sh
   tar czf "tarball/hpp.${SUFFIX}.tar.gz" install/ config.sh
