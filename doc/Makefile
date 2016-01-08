@@ -178,6 +178,7 @@ hpp-plot.configure.dep: hpp-manipulation-corba.install qgv.install \
 	hpp-plot.checkout
 qgv.configure.dep: qgv.checkout
 dlr-miiwa-model.configure.dep: dlr-miiwa-model.checkout
+ur_description.install: ur_description.checkout
 
 status:
 	@for child_dir in $$(ls ${SRC_DIR}); do \
