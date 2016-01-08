@@ -105,6 +105,9 @@ hpp-gui_repository=${HPP_REPO}
 hpp-plot_branch=devel
 hpp-plot_repository=${JMIRABEL_REPO}
 
+qgv_branch=master
+qgv_repository=${JMIRABEL_REPO}
+
 OpenSceneGraph-3.4.0_extra_flags= -DDESIRED_QT_VERSION=4 -DCOLLADA_DYNAMIC_LIBRARY=${DEVEL_DIR}/install/lib/libcollada14dom.so -DCOLLADA_INCLUDE_DIR=${DEVEL_DIR}/install/include/collada-dom -DLIB_POSTFIX=""
 
 hpp-plot_extra_flags= -DQGV_INCLUDE_DIR=${DEVEL_DIR}/install/include/qgv
