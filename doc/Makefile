@@ -11,6 +11,7 @@ JMIRABEL_REPO=https://github.com/jmirabel
 
 SRC_DIR=${DEVEL_DIR}/src
 BUILD_TYPE=Release
+HPP_GUI_OPTIONS=""
 
 hpp-fcl_branch=devel
 hpp-fcl_repository=${HPP_REPO}
@@ -116,7 +117,7 @@ doxygen-Release_1_8_10_extra_flags= -DCMAKE_BUILD_TYPE=Release
 
 all: doxygen-Release_1_8_10.install hpp-manipulation-corba.install \
 	hpp_tutorial.install hpp-gepetto-viewer.install hpp-gui.install \
-	hpp-plot.install ur_description.install 
+	hpp-plot.install ur_description.install hpp_gui_setup
 	${MAKE} hpp-doc.install
 
 
@@ -179,6 +180,14 @@ hpp-plot.configure.dep: hpp-manipulation-corba.install qgv.install \
 qgv.configure.dep: qgv.checkout
 dlr-miiwa-model.configure.dep: dlr-miiwa-model.checkout
 ur_description.install: ur_description.checkout
+
+hpp_gui_setup:
+	hpp-gui -g ${HPP_GUI_OPTIONS} --add-robot "UR5,ur5,anchor,ur5_robot,ur_description,${DEVEL_DIR}/install/share/ur_description,,,${DEVEL_DIR}/install/share" \
+		--add-robot "Lydia,lydia,freeflyer,lydia,hpp_benchmark,${DEVEL_DIR}/install/share/hpp_benchmark,,,${DEVEL_DIR}/install/share/" \
+		--add-env "Kitchen,kitchen,iai_maps,${DEVEL_DIR}/install/share/iai_maps,kitchen_area,${DEVEL_DIR}/install/share/" \
+		--add-env "Lydia-wall,lydia_wall,hpp_benchmark,${DEVEL_DIR}/install/share/hpp_benchmark,obstacle_easy,${DEVEL_DIR}/install/share/"; \
+	hpp-gui -g --config-file settings --load-plugin libhppwidgetsplugin.so --load-plugin libhppcorbaserverplugin.so ;\
+	hpp-gui -g --config-file settings-manipulation --load-plugin libhppmonitoringplugin.so --load-plugin libhppmanipulationwidgetsplugin.so --load-plugin libhppmanipulationplugin.so
 
 status:
 	@for child_dir in $$(ls ${SRC_DIR}); do \
