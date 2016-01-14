@@ -29,13 +29,13 @@ hpp-statistics_branch=devel
 hpp-statistics_repository=${HPP_REPO}
 
 hpp-core_branch=devel
-hpp-core_repository=${HPP_REPO}
+hpp-core_repository=${JMIRABEL_REPO}
 
 hpp-template-corba_branch=devel
 hpp-template-corba_repository=${LAAS_REPO}
 
 hpp-corbaserver_branch=devel
-hpp-corbaserver_repository=${HPP_REPO}
+hpp-corbaserver_repository=${JMIRABEL_REPO}
 
 qpOASES_branch=master
 qpOASES_repository=${HPP_REPO}
