@@ -23,11 +23,19 @@ if [ -z ${BUILD_TYPE} ]; then
   export BUILD_TYPE=Release
 fi
 
+export ARCH=""
+
 while test $# -gt 0
 do
   case $1 in
     --mktar)
       MAKE_TARBALL=true
+      ;;
+    --m32)
+      export ARCH="-m32"
+      ;;
+    --m64)
+      export ARCH="-m64"
       ;;
     --show-dep)
       echo "Will install"
@@ -37,14 +45,16 @@ do
       exit 0
       ;;
     --help)
-      echo "Options are"
-      echo "--mktar:   \tmake tar balls after compilation"
-      echo "--show-dep:\tshow dependencies resolved by aptitude"
-      echo "-v:        \tshow variables and ask for confirm (must be last arg)"
+      echo -e "Options are"
+      echo -e "--mktar:   \tmake tar balls after compilation"
+      echo -e "--m32:     \tbuild for 32 bit arch"
+      echo -e "--m64:     \tbuild for 64 bit arch"
+      echo -e "--show-dep:\tshow dependencies resolved by aptitude"
+      echo -e "-v:        \tshow variables and ask for confirm (must be last arg)"
       exit 0
       ;;
     -v)
-      for v in "DEVEL_DIR" "BUILD_TYPE" "MAKE_TARBALL"
+      for v in "DEVEL_DIR" "BUILD_TYPE" "MAKE_TARBALL" "ARCH"
       do
         echo "$v=${!v}"
       done
@@ -91,9 +101,9 @@ make -e hpp-manipulation-corba.install all hpp-gui.install
 if [ ${MAKE_TARBALL} = true ]; then
   cd $DEVEL_DIR/
   mkdir --parents tarball
-  SUFFIX="${BRANCH}-`date +%Y%m%d`-${BUILD_TYPE}"
+  SUFFIX="${BRANCH}-`date +%Y%m%d`-${BUILD_TYPE}${ARCH}"
   tar czf "tarball/hpp.src.${SUFFIX}.tar.gz" src/ install/ config.sh
-  tar czf "tarball/hpp.${SUFFIX}.tar.gz" install/ config.sh
+  tar czf "tarball/hpp.${SUFFIX}" install/ config.sh
   INSTALL="$DEVEL_DIR/tarball/check.${SUFFIX}.sh"
   echo "#!/bin/bash" > ${INSTALL}
   echo "# Dependencies" >> ${INSTALL}
