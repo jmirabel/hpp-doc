@@ -12,6 +12,7 @@ JMIRABEL_REPO=https://github.com/jmirabel
 SRC_DIR=${DEVEL_DIR}/src
 BUILD_TYPE=Release
 HPP_GUI_OPTIONS=""
+ARCH=""
 
 hpp-fcl_branch=devel
 hpp-fcl_repository=${HPP_REPO}
@@ -117,7 +118,7 @@ doxygen-Release_1_8_10_extra_flags= -DCMAKE_BUILD_TYPE=Release
 
 all: doxygen-Release_1_8_10.install hpp-manipulation-corba.install \
 	hpp_tutorial.install hpp-gepetto-viewer.install hpp-gui.install \
-	hpp-plot.install ur_description.install hpp_gui_setup
+	hpp-plot.install ur_description.install
 	${MAKE} hpp-doc.install
 
 
@@ -234,7 +235,7 @@ update:
 	cd ${SRC_DIR}/$(@:.configure=);\
 	mkdir -p build; \
 	cd ${SRC_DIR}/$(@:.configure=)/build; \
-	cmake -DCMAKE_INSTALL_PREFIX=${DEVEL_DIR}/install -DCMAKE_INSTALL_LIBDIR=lib -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DCMAKE_CXX_FLAGS_RELWITHDEBINFO="-g -O3 -DNDEBUG" ${$(@:.configure=)_extra_flags} ..
+	cmake -DCMAKE_INSTALL_PREFIX=${DEVEL_DIR}/install -DCMAKE_INSTALL_LIBDIR=lib -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DCMAKE_CXX_FLAGS="${ARCH}" -DCMAKE_CXX_FLAGS_RELWITHDEBINFO="-g -O3 -DNDEBUG" ${$(@:.configure=)_extra_flags} ..
 
 %.install:%.configure
 	cd ${SRC_DIR}/$(@:.install=)/build;\
@@ -281,7 +282,7 @@ eigen3.configure: eigen3.configure.dep
 	cd ${SRC_DIR}/eigen3;\
 	mkdir -p build; \
 	cd ${SRC_DIR}/eigen3/build; \
-	cmake -DCMAKE_INSTALL_PREFIX=${DEVEL_DIR}/install -DCMAKE_INSTALL_LIBDIR=lib -Dpkg_config_libdir=${DEVEL_DIR}/install/lib ..
+	cmake -DCMAKE_INSTALL_PREFIX=${DEVEL_DIR}/install -DCMAKE_CXX_FLAGS="${ARCH}" -DCMAKE_INSTALL_LIBDIR=lib -Dpkg_config_libdir=${DEVEL_DIR}/install/lib ..
 
 roboptim-core-3.1.checkout:
 	if [ -d $(@:.checkout=) ]; then \
@@ -308,11 +309,11 @@ robot_model_py.configure: robot_model_py.configure.dep
 	cd ${SRC_DIR}/$(@:.configure=)/xml_reflection;\
 	mkdir -p build; \
 	cd build; \
-	cmake -DCMAKE_INSTALL_PREFIX=${DEVEL_DIR}/install -DCMAKE_INSTALL_LIBDIR=lib -DCMAKE_BUILD_TYPE=${BUILD_TYPE} ..
+	cmake -DCMAKE_INSTALL_PREFIX=${DEVEL_DIR}/install -DCMAKE_INSTALL_LIBDIR=lib -DCMAKE_CXX_FLAGS="${ARCH}" -DCMAKE_BUILD_TYPE=${BUILD_TYPE} ..
 	cd ${SRC_DIR}/$(@:.configure=)/urdf_parser_py;\
 	mkdir -p build; \
 	cd build; \
-	cmake -DCMAKE_INSTALL_PREFIX=${DEVEL_DIR}/install -DCMAKE_INSTALL_LIBDIR=lib -DCMAKE_BUILD_TYPE=${BUILD_TYPE} ..
+	cmake -DCMAKE_INSTALL_PREFIX=${DEVEL_DIR}/install -DCMAKE_INSTALL_LIBDIR=lib -DCMAKE_CXX_FLAGS="${ARCH}" -DCMAKE_BUILD_TYPE=${BUILD_TYPE} ..
 
 robot_model_py.install: robot_model_py.configure
 	cd ${SRC_DIR}/$(@:.install=)/xml_reflection/build; \
