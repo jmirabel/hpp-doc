@@ -118,7 +118,7 @@ doxygen-Release_1_8_10_extra_flags= -DCMAKE_BUILD_TYPE=Release
 
 all: doxygen-Release_1_8_10.install hpp-manipulation-corba.install \
 	hpp_tutorial.install hpp-gepetto-viewer.install hpp-gui.install \
-	hpp-plot.install ur_description.install
+	hpp-plot.install ur_description.install hpp_benchmark.install
 	${MAKE} hpp-doc.install
 
 
@@ -180,7 +180,7 @@ hpp-plot.configure.dep: hpp-manipulation-corba.install qgv.install \
 	hpp-plot.checkout
 qgv.configure.dep: qgv.checkout
 dlr-miiwa-model.configure.dep: dlr-miiwa-model.checkout
-ur_description.install: ur_description.checkout
+ur_description.configure.dep: ur_description.checkout
 
 hpp_gui_setup:
 	hpp-gui -g ${HPP_GUI_OPTIONS} --add-robot "UR5,ur5,anchor,ur5_robot,ur_description,${DEVEL_DIR}/install/share/ur_description,,,${DEVEL_DIR}/install/share" \
