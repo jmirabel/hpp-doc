@@ -72,7 +72,7 @@ hpp-manipulation-urdf_branch=devel
 hpp-manipulation-urdf_repository=${HPP_REPO}
 
 hpp-manipulation-corba_branch=devel
-hpp-manipulation-corba_repository=${HPP_REPO}
+hpp-manipulation-corba_repository=${JMIRABEL_REPO}
 
 robot_state_chain_publisher_branch=master
 robot_state_chain_publisher_repository=${HPP_REPO}
