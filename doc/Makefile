@@ -77,14 +77,17 @@ hpp-manipulation-corba_repository=${HPP_REPO}
 robot_state_chain_publisher_branch=master
 robot_state_chain_publisher_repository=${HPP_REPO}
 
-iai_maps_branch=master
-iai_maps_repository=${HPP_REPO}
+iai_maps_branch=devel
+iai_maps_repository=${JMIRABEL_REPO}
 
 hpp_tutorial_branch=devel
 hpp_tutorial_repository=${HPP_REPO}
 
 ur_description_branch=master
 ur_description_repository=${JMIRABEL_REPO}
+
+hpp-baxter_branch=master
+hpp-baxter_repository=${JMIRABEL_REPO}
 
 hpp_benchmark_branch=master
 hpp_benchmark_repository=${HPP_REPO}
@@ -118,7 +121,8 @@ doxygen-Release_1_8_10_extra_flags= -DCMAKE_BUILD_TYPE=Release
 
 all: doxygen-Release_1_8_10.install hpp-manipulation-corba.install \
 	hpp_tutorial.install hpp-gepetto-viewer.install hpp-gui.install \
-	hpp-plot.install ur_description.install hpp_benchmark.install
+	hpp-plot.install ur_description.install hpp_benchmark.install \
+	hpp-baxter.install
 	${MAKE} hpp-doc.install
 
 
@@ -181,6 +185,7 @@ hpp-plot.configure.dep: hpp-manipulation-corba.install qgv.install \
 qgv.configure.dep: qgv.checkout
 dlr-miiwa-model.configure.dep: dlr-miiwa-model.checkout
 ur_description.configure.dep: ur_description.checkout
+hpp-baxter.configure.dep: hpp-baxter.checkout
 
 hpp_gui_setup:
 	hpp-gui -g ${HPP_GUI_OPTIONS} --add-robot "UR5,ur5,anchor,ur5_robot,ur_description,${DEVEL_DIR}/install/share/ur_description,,,${DEVEL_DIR}/install/share" \
