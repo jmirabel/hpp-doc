@@ -81,7 +81,7 @@ iai_maps_branch=devel
 iai_maps_repository=${JMIRABEL_REPO}
 
 hpp_tutorial_branch=devel
-hpp_tutorial_repository=${HPP_REPO}
+hpp_tutorial_repository=${JMIRABEL_REPO}
 
 ur_description_branch=master
 ur_description_repository=${JMIRABEL_REPO}
