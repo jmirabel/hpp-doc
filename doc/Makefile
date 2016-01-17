@@ -190,6 +190,7 @@ hpp-baxter.configure.dep: hpp-baxter.checkout
 hpp_gui_setup:
 	hpp-gui -g ${HPP_GUI_OPTIONS} --add-robot "UR5,ur5,anchor,ur5_robot,ur_description,${DEVEL_DIR}/install/share/ur_description,,,${DEVEL_DIR}/install/share" \
 		--add-robot "Lydia,lydia,freeflyer,lydia,hpp_benchmark,${DEVEL_DIR}/install/share/hpp_benchmark,,,${DEVEL_DIR}/install/share/" \
+		--add-robot "Baxter,baxter,anchor,baxter,hpp-baxter,${DEVEL_DIR}/install/share/hpp-baxter,,,`rospack find baxter_description | sed 's/baxter_description//'`" \
 		--add-env "Kitchen,kitchen,iai_maps,${DEVEL_DIR}/install/share/iai_maps,kitchen_area,${DEVEL_DIR}/install/share/" \
 		--add-env "Lydia-wall,lydia_wall,hpp_benchmark,${DEVEL_DIR}/install/share/hpp_benchmark,obstacle_easy,${DEVEL_DIR}/install/share/"; \
 	hpp-gui -g --config-file settings --load-plugin libhppwidgetsplugin.so --load-plugin libhppcorbaserverplugin.so ;\
