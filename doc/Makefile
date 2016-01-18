@@ -96,7 +96,7 @@ collada-dom_branch=master
 collada-dom_repository=${HPP_REPO}
 
 gepetto-viewer_branch=devel
-gepetto-viewer_repository=${HPP_REPO}
+gepetto-viewer_repository=${JMIRABEL_REPO}
 
 gepetto-viewer-corba_branch=devel
 gepetto-viewer-corba_repository=${HPP_REPO}
