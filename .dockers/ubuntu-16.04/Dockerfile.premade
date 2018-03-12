@@ -1,3 +1,5 @@
 FROM eur0c.laas.fr:4567/humanoid-path-planner/hpp-doc/ubuntu:16.04
 
+RUN export DEVEL_DIR=/builds/humanoid-path-planner/hpp-doc/workspace
 RUN /auto-install-hpp.sh --branch devel --target OpenSceneGraph-dae-plugin.install
+RUN mv $DEVEL_DIR /clean_workspace
