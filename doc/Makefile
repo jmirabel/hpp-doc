@@ -344,6 +344,7 @@ hpp-spline.configure.dep: hpp-spline.checkout
 eigenpy.configure.dep: eigenpy.checkout
 hpp-tools.configure.dep: hpp-tools.checkout
 pal_wsg_gripper.configure.dep: pal_wsg_gripper.checkout
+hpp_tiago.configure.dep: hpp_tiago.checkout
 
 # }}}
 ##################################
