@@ -8,18 +8,16 @@ LAAS_REPO=https://github.com/laas
 HPP_REPO=https://github.com/humanoid-path-planner
 SOT_REPO=https://github.com/stack-of-tasks
 GEPETTO_REPO=https://github.com/Gepetto
-TRAC_REPO=ssh://trac.laas.fr/git/jrl/robots/ros-hrp2
+FLORENT_REPO=https://github.com/florent-lamiraux
+PAL_REPO=https://github.com/pal-robotics
 
 SRC_DIR=${DEVEL_HPP_DIR}/src
 ifndef INSTALL_HPP_DIR
 INSTALL_HPP_DIR=${DEVEL_HPP_DIR}/install
 endif
 
-# Whether to compute humanoid specific part
-HUMANOID=TRUE
-
 BUILD_TYPE=Release
-DISABLE_TESTS=OFF
+DISABLE_TESTS=ON
 ifeq (${BUILD_TYPE},Debug)
   BUILD_FOLDER=build
 else
@@ -27,16 +25,20 @@ else
   DISABLE_TESTS=ON
 endif
 
-OSG_PACKAGE=osg-dae
-#OSG_PACKAGE=OpenSceneGraph-3.4.0
-
 WGET=wget --quiet
 UNZIP=unzip -qq
 TAR=tar
 GIT_QUIET=--quiet
-# Qt version should be either 4 or 5
-QT_VERSION=4
 INSTALL_DOCUMENTATION=ON
+
+hpp_tiago_branch=training
+hpp_tiago_repository=${FLORENT_REPO}
+
+hpp-practicals_branch=master
+hpp-practicals_repository=${HPP_REPO}
+
+pal_wsg_gripper_branch=indigo-devel
+pal_wsg_gripper_repository=${PAL_REPO}
 
 ##################################
 # {{{ Dependencies
@@ -341,6 +343,7 @@ hpp-bezier-com-traj.configure.dep: hpp-centroidal-dynamics.install hpp-spline.in
 hpp-spline.configure.dep: hpp-spline.checkout
 eigenpy.configure.dep: eigenpy.checkout
 hpp-tools.configure.dep: hpp-tools.checkout
+pal_wsg_gripper.configure.dep: pal_wsg_gripper.checkout
 
 # }}}
 ##################################
@@ -465,6 +468,16 @@ universal_robot.install_nodep:universal_robot.configure_nodep
 universal_robot.install:universal_robot.configure
 	cd ${SRC_DIR}/$(@:.install=)/ur_description/${BUILD_FOLDER};\
 	make install
+
+pal_wsg_gripper.configure: pal_wsg_gripper.configure.dep
+	. ${INSTALL_HPP_DIR}/setup.sh; \
+	cd ${SRC_DIR}/pal_wsg_gripper/pal_wsg_gripper_description;\
+	mkdir -p ${BUILD_FOLDER}; \
+	cd ${SRC_DIR}/pal_wsg_gripper/pal_wsg_gripper_description/${BUILD_FOLDER}; \
+	cmake -DCMAKE_INSTALL_PREFIX=${INSTALL_HPP_DIR} -DCMAKE_INSTALL_LIBDIR=lib -DCMAKE_BUILD_TYPE=${BUILD_TYPE} ..
+
+pal_wsg_gripper.install: pal_wsg_gripper.configure
+	${MAKE} -C ${SRC_DIR}/pal_wsg_gripper/pal_wsg_gripper_description/${BUILD_FOLDER} install
 
 # }}}
 
